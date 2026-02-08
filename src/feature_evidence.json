@@ -1,0 +1,23 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-ensure-the-frontend-analysis-flow-reliably-uses-the-backend-result-when-the-backend-method-exists-and-only-shows-the-fallback-disclosure-prefix-using-fallback-analyzer-when-the-fallback-analyzer-was-actually-used-not-when-backend-succeeds",
+      "featureTitle": "Ensure the frontend analysis flow reliably uses the backend result when the backend method exists, and only shows the fallback disclosure prefix (`[Using fallback analyzer]`) when the fallback analyzer was actually used (not when backend succeeds).",
+      "files": [
+        "frontend/src/hooks/useQueries.ts"
+      ],
+      "components": [
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

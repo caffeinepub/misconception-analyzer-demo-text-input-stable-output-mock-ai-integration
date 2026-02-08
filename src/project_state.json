@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "App that takes a user's explanation, analyzes their thinking pattern, detects specific misconceptions/mental-model breakdowns, and returns targeted insights explaining why the model failed.",
+  "architectural_notes": [],
+  "known_issues": [
+    "Current app behavior does not yet reliably analyze user explanations to identify misconceptions and explain mental-model breakdowns as intended."
+  ],
+  "isFixRequest": true,
+  "existing_features": [
+    {
+      "id": "feature-ensure-the-frontend-analysis-flow-reliably-uses-the-backend-result-when-the-backend-method-exists-and-only-shows-the-fallback-disclosure-prefix-using-fallback-analyzer-when-the-fallback-analyzer-was-actually-used-not-when-backend-succeeds",
+      "title": "Ensure the frontend analysis flow reliably uses the backend result when the backend method exists, and only shows the fallback disclosure prefix (`[Using fallback analyzer]`) when the fallback analyzer was actually used (not when backend succeeds).",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Implement core flow: user enters explanation → system analyzes thinking pattern → returns insights about specific misconception and why the mental model broke down",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Update the backend `analyzeExplanation` method (`backend/main.mo`) so it no longer returns fixed placeholder strings and instead produces a result derived from the caller-provided explanation text, returning exactly two fields: `misconception` and `whyFailed`, where `whyFailed` explains why the user’s mental model broke down.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "status": "pending"
+    }
+  ],
+  "projectName": "Make analysis reflect arbitrary user explanations (misconception + mental-model breakdown)",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

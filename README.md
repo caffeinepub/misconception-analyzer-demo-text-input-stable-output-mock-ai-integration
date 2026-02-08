@@ -1,2 +1,3 @@
-# misconception-analyzer-demo-text-input-stable-output-mock-ai-integration
-Exported from Caffeine project: Make analysis reflect arbitrary user explanations (misconception + mental-model breakdown)
+## 
+
+To run app build and run docker image: `docker build -t app . docker run -it --network host app`

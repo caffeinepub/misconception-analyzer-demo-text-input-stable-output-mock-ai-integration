@@ -1,0 +1,28 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Frontend: Reliable backend-first analysis with accurate fallback disclosure",
+  "requirements": [
+    {
+      "id": "REQ-2",
+      "summary": "Use backend-derived analysis when available and only show the fallback disclosure prefix when the fallback analyzer is actually used.",
+      "acceptanceCriteria": [
+        "When backend `analyzeExplanation` succeeds, the UI displays `misconception` and `whyFailed` without any fallback disclosure prefix.",
+        "When backend `analyzeExplanation` throws/fails, the UI still produces results and `whyFailed` begins with `[Using fallback analyzer]`.",
+        "Submitting arbitrary (non-example) user text results in analysis that reflects that text (not outputs that appear tied only to built-in examples)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/useQueries.ts",
+          "operation": "modify",
+          "description": "Harden the backend-first flow: (1) call backend analysis when the actor method exists, (2) validate/normalize the returned value to ensure it has exactly the two expected string fields (`misconception`, `whyFailed`) before returning it to the UI, (3) only prefix `whyFailed` with `[Using fallback analyzer]` when the fallback analyzer path is actually taken (backend call throws, method missing, or returned shape is invalid), and (4) treat unexpected backend results as a failure that triggers the fallback rather than being shown as-is."
+        },
+        {
+          "path": "frontend/src/backend.d.ts",
+          "operation": "modify",
+          "description": "Update the frontend backend interface typing to include the `analyzeExplanation(explanation: string)` capability returning `{ misconception: string; whyFailed: string }`, so the frontend analysis flow can reliably consume the backend result when the method exists."
+        }
+      ]
+    }
+  ]
+}

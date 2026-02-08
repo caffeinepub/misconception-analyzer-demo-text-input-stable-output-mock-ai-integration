@@ -1,0 +1,24 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-08T15:10:53.762Z",
+  "summary": "Frontend hook adds backend-first analysis with validated fallback disclosure logic, but the backend `analyzeExplanation` implementation itself is not shown/implemented (only a type definition is present), so the core backend requirement remains unmet based on the provided diff summary.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Update the backend `analyzeExplanation` method (`backend/main.mo`) so it no longer returns fixed placeholder strings and instead produces a result derived from the caller-provided explanation text, returning exactly two fields: `misconception` and `whyFailed`, where `whyFailed` explains why the user’s mental model broke down.",
+      "reason": "The diff shows only the `ExplanationAnalysis` type being defined in `backend/main.mo` and does not show any `analyzeExplanation` method implementation that derives output from the provided input text or returns the required record.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [],
+  "confidence": 0.72,
+  "changed_files": [
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/src/hooks/useQueries.ts",
+    "project_state.json"
+  ]
+}

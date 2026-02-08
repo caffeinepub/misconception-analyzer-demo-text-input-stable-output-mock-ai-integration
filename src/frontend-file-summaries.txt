@@ -1,0 +1,9 @@
+{
+  "frontend/src/lib/analysisPrompt.ts": "Single constant containing the misconception analysis prompt, serving as the sole source of truth for AI behavior that can be updated without changing surrounding logic.",
+  "frontend/src/lib/mockAnalysis.ts": "Deterministic mock analysis function that detects misconception patterns and generates personalized feedback by extracting and referencing safe snippets from the user's actual input text, varying responses across eight different pattern categories plus a default case.",
+  "frontend/src/backend.d.ts": "TypeScript interface definitions for backend integration, including the ExplanationAnalysis type and the optional analyzeExplanation method that accepts an explanation string and returns a promise of the analysis result.",
+  "frontend/src/hooks/useQueries.ts": "React Query mutation hook that attempts backend analysis first with result validation, falls back to mock analysis with clear \"[Using fallback analyzer]\" disclosure only when backend is unavailable or fails, and ensures proper error handling throughout the flow.",
+  "frontend/src/App.tsx": "Main single-page application component featuring text input with validation, three example buttons, submit/reset controls, loading states, and formatted output display with clear typographic hierarchy showing detected misconception and explanation of why understanding failed.",
+  "frontend/src/index.css": "Global styles with warm neutral OKLCH color palette using amber accent (avoiding blue/purple), enhanced typography for readability, and full light/dark mode support.",
+  "frontend/tailwind.config.js": "Tailwind configuration with Inter font family, custom color tokens mapped to OKLCH variables, and readability-focused design system."
+}

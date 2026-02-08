@@ -1,0 +1,17 @@
+{
+  "backend/main.mo": "Defines a public ExplanationAnalysis type with misconception and whyFailed text fields.",
+  "feature_evidence.json": "Feature evidence report linking a frontend file to a reliability requirement for backend vs fallback analysis behavior.",
+  "frontend-file-summaries.txt": "Provides short predefined summaries for various frontend source files used in the project.",
+  "frontend/index.css": "Tailwind base layer defining color tokens, dark mode variants, and global element styles.",
+  "frontend/index.html": "HTML entry point with a root div and script loading the React app.",
+  "frontend/src/App.tsx": "Main React component handling text input, validation, example insertion, submission, and rendering analysis results.",
+  "frontend/src/hooks/useActor.ts": "Hook creating and caching an authenticated or anonymous backend actor, refreshing it when identity changes.",
+  "frontend/src/hooks/useInternetIdentity.ts": "Internet Identity context and provider managing authentication state, login flow, and identity persistence.",
+  "frontend/src/hooks/useQueries.ts": "React Query hook attempting backend analysis first and falling back to mock analysis with disclosure when necessary.",
+  "frontend/src/index.css": "Tailwind-based global stylesheet defining warm neutral color variables, dark mode, and typography settings.",
+  "frontend/src/lib/analysisPrompt.ts": "Exports the single authoritative prompt string used for misconception analysis logic.",
+  "frontend/src/lib/mockAnalysis.ts": "Provides a deterministic mock analysis function that returns predefined misconception explanations based on input patterns.",
+  "frontend/src/main.tsx": "Bootstraps the React app with React Query and Internet Identity providers.",
+  "frontend/tailwind.config.js": "Configures Tailwind CSS with custom theme extensions, colors, animations, and plugins.",
+  "project_state.json": "Stores project metadata, feature requests, issues, and current app analysis requirements."
+}
