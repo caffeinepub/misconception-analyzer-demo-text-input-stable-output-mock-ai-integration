@@ -1,10 +1,12 @@
 # Specification
 
 ## Summary
-**Goal:** Make the app’s analysis reflect arbitrary user-provided explanations by returning a backend-derived misconception and an explicit mental-model breakdown, and ensure the UI only labels results as fallback when fallback was actually used.
+**Goal:** Move Gemini-based explanation analysis fully to the backend canister, using the provided API key securely, and return meaningful misconception/whyFailed results to the existing UI.
 
 **Planned changes:**
-- Update backend `analyzeExplanation` (`backend/main.mo`) to derive analysis from the caller’s explanation text (not fixed placeholders) and return exactly `misconception` and `whyFailed`, with `whyFailed` describing the mental-model breakdown and referencing the user input.
-- Update the frontend analysis flow to prefer and display the backend `analyzeExplanation` result when it succeeds, and only prepend `[Using fallback analyzer]` to `whyFailed` when the backend call fails and fallback analysis is used.
+- Add a public backend canister method `analyzeExplanation(explanation : Text) : async ExplanationAnalysis` in `backend/main.mo` that returns non-placeholder `{ misconception; whyFailed }` derived from the input text.
+- Implement the backend Gemini call using the existing analysis intent (misconception detection + why the mental model failed) and map the model output into `ExplanationAnalysis`.
+- Ensure the frontend never calls Gemini directly and never contains/exposes the Gemini API key; have the UI render the backend-provided analysis result when available.
+- On backend analysis failure or invalid Gemini response, return a controlled backend error so the existing frontend fallback behavior continues and clearly discloses fallback usage.
 
-**User-visible outcome:** Users can submit any explanation and receive analysis that is clearly tied to their text, showing a specific misconception and a clear explanation of why their mental model broke down; the fallback disclosure appears only when fallback was used.
+**User-visible outcome:** When a user submits an explanation, the app shows a backend-generated misconception and why-failed analysis; if backend analysis fails, the app continues to show the existing clearly-labeled fallback analysis.

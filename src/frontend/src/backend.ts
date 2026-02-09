@@ -89,10 +89,29 @@ export class ExternalBlob {
         return this;
     }
 }
+export interface ExplanationAnalysis {
+    whyFailed: string;
+    misconception: string;
+}
 export interface backendInterface {
+    analyzeExplanation(explanation: string): Promise<ExplanationAnalysis>;
 }
 export class Backend implements backendInterface {
     constructor(private actor: ActorSubclass<_SERVICE>, private _uploadFile: (file: ExternalBlob) => Promise<Uint8Array>, private _downloadFile: (file: Uint8Array) => Promise<ExternalBlob>, private processError?: (error: unknown) => never){}
+    async analyzeExplanation(arg0: string): Promise<ExplanationAnalysis> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.analyzeExplanation(arg0);
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.analyzeExplanation(arg0);
+            return result;
+        }
+    }
 }
 export interface CreateActorOptions {
     agent?: Agent;

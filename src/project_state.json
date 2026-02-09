@@ -1,39 +1,43 @@
 {
   "schemaVersion": "1.0.0",
   "projectStateVersion": 3,
-  "summary": "App that takes a user's explanation, analyzes their thinking pattern, detects specific misconceptions/mental-model breakdowns, and returns targeted insights explaining why the model failed.",
-  "architectural_notes": [],
+  "summary": "New project",
+  "architectural_notes": [
+    "Do not call Gemini directly from the React/frontend; route requests through the backend/service to avoid exposing the API key and CORS/browser restrictions.",
+    "Environment variables in Vite must be prefixed with VITE_ to be available to the frontend build; otherwise they will not load."
+  ],
   "known_issues": [
-    "Current app behavior does not yet reliably analyze user explanations to identify misconceptions and explain mental-model breakdowns as intended."
+    "Deployment failing due to incorrect Gemini API key integration (env var not loading / frontend attempting direct Gemini call causing CORS and key exposure)."
   ],
   "isFixRequest": true,
-  "existing_features": [
-    {
-      "id": "feature-ensure-the-frontend-analysis-flow-reliably-uses-the-backend-result-when-the-backend-method-exists-and-only-shows-the-fallback-disclosure-prefix-using-fallback-analyzer-when-the-fallback-analyzer-was-actually-used-not-when-backend-succeeds",
-      "title": "Ensure the frontend analysis flow reliably uses the backend result when the backend method exists, and only shows the fallback disclosure prefix (`[Using fallback analyzer]`) when the fallback analyzer was actually used (not when backend succeeds).",
-      "reqIds": [
-        "REQ-2"
-      ],
-      "version": 1
-    }
-  ],
+  "existing_features": [],
   "new_feature_requests": [
     {
       "id": "AR-1",
-      "summary": "Implement core flow: user enters explanation → system analyzes thinking pattern → returns insights about specific misconception and why the mental model broke down",
-      "reqIds": [],
-      "status": "pending"
-    },
-    {
-      "id": "AR-2",
-      "summary": "Update the backend `analyzeExplanation` method (`backend/main.mo`) so it no longer returns fixed placeholder strings and instead produces a result derived from the caller-provided explanation text, returning exactly two fields: `misconception` and `whyFailed`, where `whyFailed` explains why the user’s mental model broke down.",
+      "summary": "Implement a public backend canister method `analyzeExplanation(explanation : Text) : async ExplanationAnalysis` in `backend/main.mo` that produces a non-placeholder `{ misconception; whyFailed }` result derived from the caller-provided explanation text.",
       "reqIds": [
         "REQ-1"
       ],
       "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Use the provided Gemini API key exactly as given (`AIzaSyCcSIgdCctZbO4NGcGY81XoWsfrL1EaEqw`) for the backend’s Gemini call, and ensure the frontend never calls Gemini directly and never embeds/exposes the API key in browser-delivered code.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Update the backend so that when it calls Gemini it uses the existing analysis intent reflected by the app’s prompt (misconception detection + why the mental model failed), and map the model response into `ExplanationAnalysis` (`misconception`, `whyFailed`).",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "status": "pending"
     }
   ],
-  "projectName": "Make analysis reflect arbitrary user explanations (misconception + mental-model breakdown)",
+  "projectName": "Fix Gemini API key integration and perform analysis via backend canister",
   "clarification_mode": "instant",
   "clarification_rounds": 0
 }

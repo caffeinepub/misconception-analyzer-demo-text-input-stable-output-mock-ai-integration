@@ -1,26 +1,27 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "Frontend: Reliable backend-first analysis with accurate fallback disclosure",
+  "title": "Ensure Gemini analysis is performed only via backend and prevent API key exposure",
   "requirements": [
     {
       "id": "REQ-2",
-      "summary": "Use backend-derived analysis when available and only show the fallback disclosure prefix when the fallback analyzer is actually used.",
+      "summary": "Ensure the frontend never calls Gemini directly or exposes the Gemini API key, while rendering backend analysis results and preserving fallback disclosure behavior.",
       "acceptanceCriteria": [
-        "When backend `analyzeExplanation` succeeds, the UI displays `misconception` and `whyFailed` without any fallback disclosure prefix.",
-        "When backend `analyzeExplanation` throws/fails, the UI still produces results and `whyFailed` begins with `[Using fallback analyzer]`.",
-        "Submitting arbitrary (non-example) user text results in analysis that reflects that text (not outputs that appear tied only to built-in examples)."
+        "No frontend code path performs a direct Gemini request from the browser.",
+        "The Gemini API key string does not appear in any frontend source/bundle output.",
+        "When analysis succeeds via backend, the UI shows the backend result (no fallback disclosure prefix is added).",
+        "If backend analysis fails, the existing fallback behavior in `frontend/src/hooks/useQueries.ts` continues to work and clearly discloses fallback usage."
       ],
       "file_operations": [
         {
           "path": "frontend/src/hooks/useQueries.ts",
           "operation": "modify",
-          "description": "Harden the backend-first flow: (1) call backend analysis when the actor method exists, (2) validate/normalize the returned value to ensure it has exactly the two expected string fields (`misconception`, `whyFailed`) before returning it to the UI, (3) only prefix `whyFailed` with `[Using fallback analyzer]` when the fallback analyzer path is actually taken (backend call throws, method missing, or returned shape is invalid), and (4) treat unexpected backend results as a failure that triggers the fallback rather than being shown as-is."
+          "description": "Enforce the browser-side analysis flow to call only the backend canister actor method for analysis (no direct Gemini/browser networking), validate the backend response shape before returning it to the UI (without adding fallback disclosure on success), and preserve the existing deterministic mock fallback behavior with clear disclosure when backend analysis fails or is unavailable."
         },
         {
-          "path": "frontend/src/backend.d.ts",
+          "path": "frontend/src/App.tsx",
           "operation": "modify",
-          "description": "Update the frontend backend interface typing to include the `analyzeExplanation(explanation: string)` capability returning `{ misconception: string; whyFailed: string }`, so the frontend analysis flow can reliably consume the backend result when the method exists."
+          "description": "Confirm the UI renders analysis results exactly as returned by the analysis hook (no added prefixes or Gemini-specific messaging on success) and keeps all user-facing text in English, ensuring backend results are displayed as-is and fallback disclosure remains visible when present in the returned text."
         }
       ]
     }
